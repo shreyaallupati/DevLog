@@ -1,12 +1,18 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import cors from 'cors';
+import path from 'path';
 import dotenv from 'dotenv';
 import pool from './db.js';
 import authRoutes from './routes/auth.js';
 import postRoutes from './routes/posts.js';
 
 dotenv.config();
+
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -15,10 +21,12 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json()); // Parses incoming JSON requests
 
-// Wire up the auth routes
-app.use('/api/auth', authRoutes); // <-- All routes in auth.ts will start with /api/auth
+app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
 
-app.use('/api/posts',postRoutes) // <-- All routes in posts.ts will start with /api/posts
+// Wire up the auth routes
+app.use('/api/auth', authRoutes);
+// Wire up the post routes
+app.use('/api/posts',postRoutes)
 
 // Health Check & DB Connection Test Route
 app.get('/api/health', async (req: Request, res: Response) => {
