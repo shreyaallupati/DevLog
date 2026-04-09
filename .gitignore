@@ -1,0 +1,41 @@
+# Node dependencies
+node_modules/
+server/node_modules/
+client/node_modules/
+
+# Environment variables (CRITICAL for security)
+.env
+.env.local
+.env.development
+.env.production
+server/.env
+client/.env
+
+# Build outputs (TypeScript compilation and React builds)
+dist/
+build/
+server/dist/
+client/build/
+client/dist/
+
+# Local File Uploads (Ignore the images Multer saves, keep the folder)
+server/public/uploads/*
+!server/public/uploads/.gitkeep 
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Editor directories
+.vscode/
+.idea/
+
+# Uploads
+uploads/
