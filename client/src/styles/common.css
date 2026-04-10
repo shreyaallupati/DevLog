@@ -1,0 +1,124 @@
+/* Shared common styles for the app (complements Tailwind utilities)
+   This file provides small, reusable component classes so the UI looks
+   consistent across pages without changing existing tailwind markup.
+*/
+
+/* Layout helpers */
+.site-container {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Card component - used for posts, panels, etc. */
+.card {
+  background: var(--bg);
+  color: var(--text-h);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.card-padding {
+  padding: 1.5rem;
+}
+
+/* Slight lift on hover for interactive cards */
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+/* Button primitives */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.btn-muted {
+  background: transparent;
+  color: var(--text-h);
+  border: 1px solid var(--border);
+}
+
+/* Avatar */
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+/* Muted text */
+.muted {
+  color: var(--text);
+}
+
+/* Read overlay for cards */
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.card-overlay .dim {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  transition: background-color .24s ease;
+}
+
+.card-overlay .cta {
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+  transform: translateY(6px);
+  opacity: 0;
+  transition: all .24s ease;
+}
+
+.group:hover .card-overlay .dim {
+  background: rgba(0,0,0,0.18);
+}
+
+.group:hover .card-overlay .cta {
+  pointer-events: auto;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Small utility */
+.truncate-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Respect prefers-color-scheme but main colors live in index.css variables */
+@media (prefers-color-scheme: dark) {
+  .card { box-shadow: none; }
+}

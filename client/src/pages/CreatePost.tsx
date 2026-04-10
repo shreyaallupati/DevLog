@@ -22,18 +22,13 @@ export const CreatePost = () => {
         formData.append('title', title);
         formData.append('content', content);
         
-        // Only append the image if the user actually selected one
         if (coverImage) {
-        // 'coverImage' MUST exactly match the name Multer expects: upload.single('coverImage')
         formData.append('coverImage', coverImage); 
         }
 
         try {
-        // Because we pass a FormData object instead of a standard {}, 
-        // Axios is smart enough to automatically set the Content-Type to multipart/form-data!
         await api.post('/posts', formData);
         
-        // If successful, redirect back to the home feed
         navigate('/');
         } catch (err: any) {
         setError(err.response?.data?.error || 'Failed to create post. Check the console.');

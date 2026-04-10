@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./styles/common.css";
 
 /* 1. Register custom variables to Tailwind so you can use classes like `bg-theme-bg` or `text-theme-heading` in React */
 @theme {

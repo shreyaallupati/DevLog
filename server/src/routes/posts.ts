@@ -92,6 +92,37 @@ router.get('/me', authorize, async (req: AuthRequest, res: Response): Promise<vo
     }
 });
 
+// Fetch a single post by ID (Public Route)
+router.get('/:id', async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { id } = req.params;
+        
+        // Fetch the post and JOIN the users table to get the author's username
+        const post = await pool.query(`
+            SELECT 
+                posts.id, 
+                posts.title, 
+                posts.content, 
+                posts.cover_image_path, 
+                posts.created_at,
+                users.username AS author
+            FROM posts
+            JOIN users ON posts.user_id = users.id
+            WHERE posts.id = $1
+        `, [id]);
+        
+        if (post.rows.length === 0) {
+            res.status(404).json({ error: "Post not found" });
+            return;
+        }
+        
+        res.status(200).json(post.rows[0]);
+    } catch (err) {
+        console.error('Fetch single post error:', err);
+        res.status(500).json({ error: "Server error fetching post" });
+    }
+});
+
 // Delete a post (Protected Route)
 router.delete('/:id', authorize, async (req: AuthRequest, res: Response): Promise<void> => {
     try {

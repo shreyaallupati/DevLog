@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 
@@ -16,6 +17,7 @@ export const Home = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const { user } = useAuth();
+    const navigate = useNavigate(); // Initialize navigation
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -35,7 +37,8 @@ export const Home = () => {
 
     const serverUrl = import.meta.env.VITE_API_URL.replace("/api", "");
 
-    const handleDelete = async (postId: string) => {
+    const handleDelete = async (e: React.MouseEvent, postId: string) => {
+        e.stopPropagation(); // Prevent the click from opening the post
         if (!window.confirm("Are you sure you want to delete this DevLog?")) return;
 
         try {
@@ -93,8 +96,22 @@ export const Home = () => {
                     {posts.map((post) => (
                         <article
                             key={post.id}
-                            className="group bg-theme-bg border border-theme-border rounded-2xl overflow-hidden shadow-sm hover:shadow-theme transition-all duration-300"
+                            onClick={() => navigate(`/posts/${post.id}`)} // Make whole card clickable
+                            className="relative group bg-white dark:bg-slate-900 border border-theme-border rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 cursor-pointer transition-all duration-300 ease-out"
                         >
+                            {/* Hover overlay - appears on hover */}
+                            <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+                                {/* dim layer */}
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 dark:group-hover:bg-black/40 transition-colors duration-300" />
+
+                                {/* button wrapper - slides up slightly on hover */}
+                                <div className="relative opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 z-30">
+                                    <div className="px-6 py-2.5 bg-white/95 dark:bg-slate-800/95 text-slate-900 dark:text-white border border-gray-200 dark:border-slate-600 rounded-full font-semibold shadow-lg backdrop-blur-sm">
+                                        Read Post ✨
+                                    </div>
+                                </div>
+                            </div>
+                            
                             {/* Cover Image (if exists) */}
                             {post.cover_image_path && (
                                 <div className="w-full h-[250px] sm:h-[350px] overflow-hidden bg-theme-social">
@@ -107,7 +124,7 @@ export const Home = () => {
                             )}
 
                             {/* Post Content Area */}
-                            <div className="p-6 sm:p-8">
+                            <div className="p-6 sm:p-8 relative z-10">
                                 {/* Meta Data */}
                                 <div className="flex items-center gap-2 mb-4 text-sm text-theme-text font-medium">
                                     <div className="w-6 h-6 rounded-full bg-theme-accent-bg text-theme-accent flex items-center justify-center text-xs font-bold">
@@ -124,20 +141,20 @@ export const Home = () => {
                                     </span>
                                 </div>
 
-                                <h2 className="text-2xl sm:text-3xl font-bold text-theme-heading mb-4 leading-tight">
+                                <h2 className="text-2xl sm:text-3xl font-bold text-theme-heading mb-4 leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                                     {post.title}
                                 </h2>
 
-                                <p className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-theme-text bg-theme-code p-5 rounded-xl border border-theme-border/50">
+                                <p className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-theme-text bg-gray-50 dark:bg-slate-800 p-5 rounded-xl border border-theme-border/50 line-clamp-3">
                                     {post.content}
                                 </p>
 
                                 {/* Delete Button (Only visible to Author) */}
                                 {user?.username === post.author && (
-                                    <div className="mt-6 pt-6 border-t border-theme-border">
+                                    <div className="mt-6 pt-6 border-t border-theme-border flex justify-end">
                                         <button
-                                            onClick={() => handleDelete(post.id)}
-                                            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/50 rounded-lg transition-colors cursor-pointer"
+                                            onClick={(e) => handleDelete(e, post.id)} // Pass event to stop propagation
+                                            className="relative z-30 inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/50 rounded-lg transition-colors cursor-pointer"
                                         >
                                             🗑️ Delete Post
                                         </button>
