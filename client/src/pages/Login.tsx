@@ -30,7 +30,7 @@ export const Login = () => {
 
     return (
         <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
-            <div className="w-full max-w-[400px] bg-theme-bg border border-theme-border rounded-2xl shadow-sm p-8">
+            <div className="w-full max-w-md bg-theme-bg border border-theme-border rounded-2xl shadow-theme p-8">
 
                 <div className="text-center mb-8">
                     <h2 className="text-3xl font-heading font-bold text-theme-heading m-0 mb-2">Welcome back</h2>

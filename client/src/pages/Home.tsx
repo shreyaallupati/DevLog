@@ -69,9 +69,9 @@ export const Home = () => {
         );
     }
 
+    // ... (imports remain the same)
     return (
-        <div className="max-w-[800px] mx-auto px-4 py-8 sm:py-12">
-            {/* Page Header */}
+        <div className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
             <div className="mb-10 border-b border-theme-border pb-6 flex items-end justify-between">
                 <div>
                     <h1 className="text-3xl sm:text-4xl font-heading font-bold text-theme-heading tracking-tight m-0">
@@ -83,28 +83,20 @@ export const Home = () => {
                 </div>
             </div>
 
-            {/* Empty State */}
             {posts.length === 0 ? (
                 <div className="text-center py-20 px-6 bg-theme-social border border-theme-border rounded-xl border-dashed">
-                    <p className="text-theme-text text-lg">
-                        No posts yet. Be the first to publish one!
-                    </p>
+                    <p className="text-theme-text text-lg">No posts yet. Be the first to publish one!</p>
                 </div>
             ) : (
-                /* Feed Grid */
                 <div className="flex flex-col gap-10">
                     {posts.map((post) => (
                         <article
                             key={post.id}
-                            onClick={() => navigate(`/posts/${post.id}`)} // Make whole card clickable
-                            className="relative group bg-white dark:bg-slate-900 border border-theme-border rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 cursor-pointer transition-all duration-300 ease-out"
+                            onClick={() => navigate(`/posts/${post.id}`)}
+                            className="card card-hover relative group cursor-pointer"
                         >
-                            {/* Hover overlay - appears on hover */}
                             <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                                {/* dim layer */}
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 dark:group-hover:bg-black/40 transition-colors duration-300" />
-
-                                {/* button wrapper - slides up slightly on hover */}
                                 <div className="relative opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 z-30">
                                     <div className="px-6 py-2.5 bg-white/95 dark:bg-slate-800/95 text-slate-900 dark:text-white border border-gray-200 dark:border-slate-600 rounded-full font-semibold shadow-lg backdrop-blur-sm">
                                         Read Post ✨
@@ -112,7 +104,6 @@ export const Home = () => {
                                 </div>
                             </div>
                             
-                            {/* Cover Image (if exists) */}
                             {post.cover_image_path && (
                                 <div className="w-full h-[250px] sm:h-[350px] overflow-hidden bg-theme-social">
                                     <img
@@ -123,37 +114,32 @@ export const Home = () => {
                                 </div>
                             )}
 
-                            {/* Post Content Area */}
-                            <div className="p-6 sm:p-8 relative z-10">
-                                {/* Meta Data */}
+                            <div className="card-padding relative z-10">
                                 <div className="flex items-center gap-2 mb-4 text-sm text-theme-text font-medium">
-                                    <div className="w-6 h-6 rounded-full bg-theme-accent-bg text-theme-accent flex items-center justify-center text-xs font-bold">
+                                    <div className="avatar w-6 h-6 text-xs">
                                         {post.author.charAt(0).toUpperCase()}
                                     </div>
                                     <span className="text-theme-heading">{post.author}</span>
                                     <span className="text-theme-border mx-1">•</span>
                                     <span>
                                         {new Date(post.created_at).toLocaleDateString(undefined, {
-                                            month: "short",
-                                            day: "numeric",
-                                            year: "numeric",
+                                            month: "short", day: "numeric", year: "numeric",
                                         })}
                                     </span>
                                 </div>
 
-                                <h2 className="text-2xl sm:text-3xl font-bold text-theme-heading mb-4 leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                <h2 className="text-2xl sm:text-3xl font-bold text-theme-heading mb-4 leading-tight group-hover:text-theme-accent transition-colors">
                                     {post.title}
                                 </h2>
 
-                                <p className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-theme-text bg-gray-50 dark:bg-slate-800 p-5 rounded-xl border border-theme-border/50 line-clamp-3">
+                                <p className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-theme-text bg-theme-code p-5 rounded-xl border border-theme-border/50 truncate-3">
                                     {post.content}
                                 </p>
 
-                                {/* Delete Button (Only visible to Author) */}
                                 {user?.username === post.author && (
                                     <div className="mt-6 pt-6 border-t border-theme-border flex justify-end">
                                         <button
-                                            onClick={(e) => handleDelete(e, post.id)} // Pass event to stop propagation
+                                            onClick={(e) => handleDelete(e, post.id)}
                                             className="relative z-30 inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/50 rounded-lg transition-colors cursor-pointer"
                                         >
                                             🗑️ Delete Post

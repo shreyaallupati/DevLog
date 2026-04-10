@@ -1,7 +1,6 @@
 @import "tailwindcss";
-@import "./styles/common.css";
 
-/* 1. Register custom variables to Tailwind so you can use classes like `bg-theme-bg` or `text-theme-heading` in React */
+/* Tailwind v4 configuration */
 @theme {
     --font-sans: system-ui, "Segoe UI", Roboto, sans-serif;
     --font-heading: system-ui, "Segoe UI", Roboto, sans-serif;
@@ -20,7 +19,6 @@
     --shadow-theme: var(--shadow);
 }
 
-/* 2. Define the base logic and Light/Dark mode colors */
 @layer base {
     :root {
         --text: #6b6375;
@@ -32,8 +30,7 @@
         --accent-bg: rgba(170, 59, 255, 0.1);
         --accent-border: rgba(170, 59, 255, 0.5);
         --social-bg: rgba(244, 243, 236, 0.5);
-        --shadow:
-            rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+        --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -47,49 +44,96 @@
             --accent-bg: rgba(192, 132, 252, 0.15);
             --accent-border: rgba(192, 132, 252, 0.5);
             --social-bg: rgba(47, 48, 58, 0.5);
-            --shadow:
-                rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-        }
-
-        #social .button-icon {
-            @apply invert brightness-200;
+            --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
         }
     }
 
-    /* 3. Global Element Styling using Tailwind utilities */
+    /* Global Typography */
     body {
-        /* Tailwind's lg: breakpoint corresponds perfectly to your max-width: 1024px logic */
-        @apply bg-theme-bg text-theme-text font-sans antialiased text-[16px] lg:text-[18px] leading-[145%] tracking-[0.18px];
+        @apply bg-theme-bg text-theme-text font-sans antialiased text-base leading-relaxed;
         color-scheme: light dark;
     }
 
     #root {
-        @apply w-full min-h-[100svh] flex flex-col;
+        @apply w-full min-h-screen flex flex-col;
     }
 
-    h1,
-    h2 {
+    @media (min-width: 1024px) {
+        body { @apply text-lg; }
+        h1 { @apply text-5xl my-8; }
+        h2 { @apply text-2xl; }
+    }
+
+    h1, h2 {
         @apply font-heading font-medium text-theme-heading;
     }
 
     h1 {
-        @apply text-[36px] lg:text-[56px] tracking-[-1.68px] my-5 lg:my-8;
+        @apply text-4xl tracking-tight my-5;
     }
 
     h2 {
-        @apply text-[20px] lg:text-[24px] leading-[118%] tracking-[-0.24px] m-0 mb-2;
+        @apply text-xl leading-tight tracking-tight m-0 mb-2;
     }
 
     p {
         @apply m-0;
     }
 
-    code,
-    .counter {
+    code, .counter {
         @apply font-mono inline-flex rounded text-theme-heading;
     }
 
     code {
-        @apply text-[15px] leading-[135%] px-2 py-1 bg-theme-code;
+        @apply text-sm px-2 py-1 bg-theme-code;
+    }
+}
+
+@layer components {
+    /* Layout helpers */
+    .site-container {
+        @apply max-w-3xl mx-auto px-4;
+    }
+    
+    /* Card component */
+    .card {
+        @apply bg-theme-bg text-theme-heading border border-theme-border rounded-2xl shadow-theme overflow-hidden;
+    }
+    
+    .card-padding {
+        @apply p-6;
+    }
+    
+    /* Slight lift on hover */
+    .card-hover:hover {
+        @apply -translate-y-1 shadow-xl transition-all duration-300;
+    }
+    
+    /* Button primitives */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-semibold cursor-pointer transition-colors;
+    }
+    
+    .btn-primary {
+        @apply bg-theme-accent text-white border border-black/5 hover:opacity-90;
+    }
+    
+    .btn-muted {
+        @apply bg-transparent text-theme-heading border border-theme-border hover:bg-theme-social;
+    }
+    
+    /* Avatar */
+    .avatar {
+        @apply w-9 h-9 rounded-full inline-flex items-center justify-center font-bold bg-theme-accent-bg text-theme-accent;
+    }
+    
+    /* Muted text */
+    .muted {
+        @apply text-theme-text;
+    }
+    
+    /* Small utility */
+    .truncate-3 {
+        @apply line-clamp-3;
     }
 }
