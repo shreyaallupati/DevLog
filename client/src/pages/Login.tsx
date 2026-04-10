@@ -7,7 +7,7 @@ export const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false); // Added loading state for better UX
+    const [isLoading, setIsLoading] = useState(false);
 
     const { login } = useAuth();
     const navigate = useNavigate();
@@ -29,7 +29,19 @@ export const Login = () => {
     };
 
     return (
-        <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
+        <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 py-12">
+            
+            {/* Back Navigation Container */}
+            <div className="w-full max-w-md mb-6">
+                <button 
+                    onClick={() => navigate('/')} 
+                    className="group flex items-center gap-2 text-sm font-medium text-theme-text hover:text-theme-heading transition-colors w-max"
+                >
+                    <span className="transform group-hover:-translate-x-1 transition-transform">←</span>
+                    Back to Feed
+                </button>
+            </div>
+
             <div className="w-full max-w-md bg-theme-bg border border-theme-border rounded-2xl shadow-theme p-8">
 
                 <div className="text-center mb-8">

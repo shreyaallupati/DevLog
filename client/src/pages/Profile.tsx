@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 
@@ -13,6 +14,7 @@ interface Post {
 
 export const Profile = () => {
     const { user } = useAuth();
+    const navigate = useNavigate(); 
     const [myPosts, setMyPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -45,7 +47,6 @@ export const Profile = () => {
         }
     };
 
-    // Loading & Error States
     if (loading) {
         return (
             <div className="flex justify-center items-center min-h-[50vh]">
@@ -63,7 +64,16 @@ export const Profile = () => {
     }
 
     return (
-        <div className="max-w-[800px] mx-auto px-4 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
+            
+            {/* Back Navigation */}
+            <button 
+                onClick={() => navigate('/')} 
+                className="group flex items-center gap-2 text-sm font-medium text-theme-text hover:text-theme-heading transition-colors mb-8 sm:mb-10"
+            >
+                <span className="transform group-hover:-translate-x-1 transition-transform">←</span>
+                Back to Feed
+            </button>
 
             {/* Profile Header Card */}
             <div className="bg-theme-bg border border-theme-border rounded-2xl p-6 sm:p-8 mb-10 flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left shadow-sm">
@@ -86,21 +96,17 @@ export const Profile = () => {
                 </h2>
             </div>
 
-            {/* Empty State */}
             {myPosts.length === 0 ? (
                 <div className="text-center py-16 px-6 bg-theme-social border border-theme-border rounded-xl border-dashed">
                     <p className="text-theme-text">You haven't published any DevLogs yet.</p>
                 </div>
             ) : (
-                /* Management Dashboard List */
                 <div className="flex flex-col gap-5">
                     {myPosts.map((post) => (
                         <div
                             key={post.id}
                             className="group flex flex-col sm:flex-row bg-theme-bg border border-theme-border rounded-xl overflow-hidden shadow-sm hover:shadow-theme transition-all duration-300"
                         >
-
-                            {/* Thumbnail Image */}
                             {post.cover_image_path && (
                                 <div className="w-full sm:w-48 lg:w-56 h-48 sm:h-auto flex-shrink-0 bg-theme-social overflow-hidden">
                                     <img
@@ -111,7 +117,6 @@ export const Profile = () => {
                                 </div>
                             )}
 
-                            {/* Content Area */}
                             <div className="p-5 sm:p-6 flex-1 flex flex-col">
                                 <div className="flex justify-between items-start gap-4 mb-3">
                                     <h3 className="text-xl font-bold text-theme-heading m-0 leading-tight">
@@ -122,12 +127,10 @@ export const Profile = () => {
                                     </span>
                                 </div>
 
-                                {/* line-clamp-2 beautifully truncates long text with an ellipsis (...) */}
                                 <p className="text-theme-text text-sm font-mono line-clamp-2 mb-4">
                                     {post.content}
                                 </p>
 
-                                {/* Action Footer */}
                                 <div className="mt-auto pt-4 border-t border-theme-border flex justify-end">
                                     <button
                                         onClick={() => handleDelete(post.id)}
@@ -140,7 +143,6 @@ export const Profile = () => {
                                     </button>
                                 </div>
                             </div>
-                            
                         </div>
                     ))}
                 </div>

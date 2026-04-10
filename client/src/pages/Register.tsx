@@ -33,8 +33,20 @@ export const Register = () => {
     };
 
     return (
-        <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
-            <div className="w-full max-w-[400px] bg-theme-bg border border-theme-border rounded-2xl shadow-sm p-8">
+        <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 py-12">
+            
+            {/* Back Navigation Container aligned to the width of the form */}
+            <div className="w-full max-w-md mb-6">
+                <button 
+                    onClick={() => navigate('/')} 
+                    className="group flex items-center gap-2 text-sm font-medium text-theme-text hover:text-theme-heading transition-colors w-max"
+                >
+                    <span className="transform group-hover:-translate-x-1 transition-transform">←</span>
+                    Back to Feed
+                </button>
+            </div>
+
+            <div className="w-full max-w-md bg-theme-bg border border-theme-border rounded-2xl shadow-theme p-8">
 
                 <div className="text-center mb-8">
                     <h2 className="text-3xl font-heading font-bold text-theme-heading m-0 mb-2">Join DevLog</h2>

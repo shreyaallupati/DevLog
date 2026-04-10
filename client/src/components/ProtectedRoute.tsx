@@ -1,8 +1,8 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import type { JSX } from 'react';
 
-export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+// ProtectedRoute used as a wrapper for nested routes must render an <Outlet />
+export const ProtectedRoute = () => {
     const { isAuthenticated } = useAuth();
 
     // If the user is not logged in, redirect them immediately to /login
@@ -10,6 +10,6 @@ export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
         return <Navigate to="/login" replace />;
     }
 
-    // If they are logged in, render the page they asked for
-    return children;
+    // If they are logged in, render the nested route(s)
+    return <Outlet />;
 };

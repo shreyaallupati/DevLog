@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 
@@ -17,7 +17,7 @@ export const Home = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const { user } = useAuth();
-    const navigate = useNavigate(); // Initialize navigation
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -38,7 +38,7 @@ export const Home = () => {
     const serverUrl = import.meta.env.VITE_API_URL.replace("/api", "");
 
     const handleDelete = async (e: React.MouseEvent, postId: string) => {
-        e.stopPropagation(); // Prevent the click from opening the post
+        e.stopPropagation();
         if (!window.confirm("Are you sure you want to delete this DevLog?")) return;
 
         try {
@@ -50,7 +50,6 @@ export const Home = () => {
         }
     };
 
-    // Loading & Error States styled nicely
     if (loading) {
         return (
             <div className="flex justify-center items-center min-h-[50vh]">
@@ -69,7 +68,6 @@ export const Home = () => {
         );
     }
 
-    // ... (imports remain the same)
     return (
         <div className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
             <div className="mb-10 border-b border-theme-border pb-6 flex items-end justify-between">
@@ -85,7 +83,9 @@ export const Home = () => {
 
             {posts.length === 0 ? (
                 <div className="text-center py-20 px-6 bg-theme-social border border-theme-border rounded-xl border-dashed">
-                    <p className="text-theme-text text-lg">No posts yet. Be the first to publish one!</p>
+                    <p className="text-theme-text text-lg">
+                        No posts yet. Be the first to publish one!
+                    </p>
                 </div>
             ) : (
                 <div className="flex flex-col gap-10">
@@ -98,9 +98,28 @@ export const Home = () => {
                             <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 dark:group-hover:bg-black/40 transition-colors duration-300" />
                                 <div className="relative opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 z-30">
-                                    <div className="px-6 py-2.5 bg-white/95 dark:bg-slate-800/95 text-slate-900 dark:text-white border border-gray-200 dark:border-slate-600 rounded-full font-semibold shadow-lg backdrop-blur-sm">
-                                        Read Post ✨
+                                    
+                                    {/* --- UPDATED READ POST BUTTON --- */}
+                                    <div className="flex items-center gap-2 px-6 py-2.5 bg-white/95 dark:bg-slate-800/95 text-slate-900 dark:text-white border border-gray-200 dark:border-slate-600 rounded-full font-semibold shadow-lg backdrop-blur-sm">
+                                        Read Post
+                                        <svg 
+                                            xmlns="http://www.w3.org/2000/svg" 
+                                            viewBox="0 0 24 24" 
+                                            fill="none" 
+                                            stroke="currentColor" 
+                                            strokeWidth="2" 
+                                            strokeLinecap="round" 
+                                            strokeLinejoin="round" 
+                                            className="w-4 h-4 text-yellow-500"
+                                        >
+                                            <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/>
+                                            <path d="M20 2v4"/>
+                                            <path d="M22 4h-4"/>
+                                            <circle cx="4" cy="20" r="2"/>
+                                        </svg>
                                     </div>
+                                    {/* -------------------------------- */}
+
                                 </div>
                             </div>
                             
@@ -142,7 +161,8 @@ export const Home = () => {
                                             onClick={(e) => handleDelete(e, post.id)}
                                             className="relative z-30 inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/50 rounded-lg transition-colors cursor-pointer"
                                         >
-                                            🗑️ Delete Post
+                                            Delete Post
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                                         </button>
                                     </div>
                                 )}
