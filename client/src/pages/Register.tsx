@@ -36,7 +36,7 @@ export const Register = () => {
         <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 py-12">
             
             {/* Back Navigation Container aligned to the width of the form */}
-            <div className="w-full max-w-md mb-6">
+            <div className="w-full max-w-md mb-6 z-60">
                 <button 
                     onClick={() => navigate('/')} 
                     className="group flex items-center gap-2 text-sm font-medium text-theme-text hover:text-theme-heading transition-colors w-max"

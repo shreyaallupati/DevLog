@@ -59,9 +59,9 @@ export const ReadPost = () => {
             <div className="max-w-2xl mx-auto mt-20 px-4 text-center">
                 <div className="p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
                     <p className="text-red-600 dark:text-red-400 mb-4">{error || "Post not found"}</p>
-                    <button 
+                    <button
                         onClick={() => navigate("/")}
-                        className="px-4 py-2 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 hover:bg-gray-50 transition-colors"
+                        className="px-4 py-2 bg-blue-100 text-blue-800 rounded-lg shadow-sm border border-blue-200 hover:bg-blue-200 transition-colors dark:bg-slate-800 dark:text-white dark:border-slate-700"
                     >
                         Return Home
                     </button>
@@ -74,7 +74,7 @@ export const ReadPost = () => {
     // Main Post Render
     // ----------------------------------------
     return (
-        <div className="w-full max-w-7xl mx-auto px-4 py-8 sm:py-12 animate-fade-in">
+        <div className="w-full max-w-7xl mx-auto px-4 py-8 sm:py-12 animate-fade-in z-60">
             {/* Back Navigation */}
             <button 
                 onClick={() => navigate(-1)} // Goes back to the previous page
@@ -123,8 +123,8 @@ export const ReadPost = () => {
             </header>
 
         {/* Post Content */}
-            <article className="mt-8 flex flex-col w-full items-stretch">
-                <div className="flex-1 w-full min-h-[200px] bg-gray-50/50 dark:bg-slate-800/50 p-6 sm:p-8 rounded-2xl border border-theme-border/50 shadow-sm">
+            <article className="mt-8 flex flex-col w-full items-stretch z-60 relative">
+                <div className="flex-1 w-full min-h-[200px] p-6 sm:p-8 rounded-2xl border border-theme-border shadow-sm relative z-60 bg-transparent">
                     <p className="whitespace-pre-wrap break-words font-mono text-base sm:text-lg leading-relaxed text-theme-heading">
                         {post.content}
                     </p>

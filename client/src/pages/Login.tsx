@@ -29,7 +29,7 @@ export const Login = () => {
     };
 
     return (
-        <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 py-12">
+        <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 py-12 z-60">
             
             {/* Back Navigation Container */}
             <div className="w-full max-w-md mb-6">

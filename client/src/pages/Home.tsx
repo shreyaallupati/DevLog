@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
+import SplashCursor from "../components/SplashCursor";
 
 interface Post {
     id: string;
@@ -70,7 +71,7 @@ export const Home = () => {
 
     return (
         <div className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
-            <div className="mb-10 border-b border-theme-border pb-6 flex items-end justify-between">
+            <div className="mb-10 border-b border-theme-border pb-6 flex items-end justify-between z-60">
                 <div>
                     <h1 className="text-3xl sm:text-4xl font-heading font-bold text-theme-heading tracking-tight m-0">
                         Latest DevLogs
@@ -93,14 +94,13 @@ export const Home = () => {
                         <article
                             key={post.id}
                             onClick={() => navigate(`/posts/${post.id}`)}
-                            className="card card-hover relative group cursor-pointer"
+                            className="card card-hover relative group cursor-pointer z-60"
                         >
                             <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 dark:group-hover:bg-black/40 transition-colors duration-300" />
-                                <div className="relative opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 z-30">
-                                    
-                                    {/* --- UPDATED READ POST BUTTON --- */}
-                                    <div className="flex items-center gap-2 px-6 py-2.5 bg-white/95 dark:bg-slate-800/95 text-slate-900 dark:text-white border border-gray-200 dark:border-slate-600 rounded-full font-semibold shadow-lg backdrop-blur-sm">
+                                <div className="relative opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto pointer-events-none transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 z-30">
+                                    {/* --- UPDATED READ POST BUTTON (opaque light-blue) --- */}
+                                    <div className="flex items-center gap-2 px-6 py-2.5 bg-blue-200 text-blue-900 border border-blue-300 rounded-full font-semibold shadow-lg hover:bg-blue-300 dark:bg-slate-800 dark:text-white dark:border-slate-700">
                                         Read Post
                                         <svg 
                                             xmlns="http://www.w3.org/2000/svg" 
@@ -151,7 +151,7 @@ export const Home = () => {
                                     {post.title}
                                 </h2>
 
-                                <p className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-theme-text bg-theme-code p-5 rounded-xl border border-theme-border/50 truncate-3">
+                                <p className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-theme-text bg-theme-code p-5 rounded-xl border border-theme-border truncate-3">
                                     {post.content}
                                 </p>
 

@@ -26,39 +26,39 @@
 
 @layer base {
     :root {
-        /* Default: dark theme */
-        --text: #cbd5dc; /* secondary text */
-        --text-h: #f8fafc; /* headings */
-        --bg: #0b0b0d; /* page background - near black */
-        --border: #1f2227; /* dark border */
-        --code-bg: #0f1113; /* code block background */
-        --accent: #8b5cf6; /* purple accent */
-        --accent-bg: rgba(139, 92, 246, 0.12);
-        --accent-border: rgba(139, 92, 246, 0.4);
-        --social-bg: rgba(16, 18, 20, 0.5);
+        /* Legacy Theme - Dark Blue Palette */
+        --text: #94a3b8; /* Soft blue-grey for readability */
+        --text-h: #f1f5f9; /* Bright slate for headings */
+        --bg: #020617; /* Deepest midnight blue / slate-950 */
+        --border: #1e293b; /* Subtle blue-grey border / slate-800 */
+        --code-bg: #0f172a; /* Code background / slate-900 */
+        --accent: #3b82f6; /* Vibrant blue-500 */
+        --accent-bg: rgba(59, 130, 246, 0.15);
+        --accent-border: rgba(59, 130, 246, 0.4);
+        --social-bg: rgba(15, 23, 42, 0.5);
         --shadow: rgba(0, 0, 0, 0.6) 0 10px 20px -4px, rgba(0, 0, 0, 0.4) 0 6px 10px -3px;
     }
 
-    /* If user explicitly prefers light mode, provide the light palette */
+    /* Force the dark blue theme even if the user's OS is in light mode */
     @media (prefers-color-scheme: light) {
         :root {
-            --text: #6b6375;
-            --text-h: #08060d;
-            --bg: #ffffff;
-            --border: #e5e4e7;
-            --code-bg: #f4f3ec;
-            --accent: #aa3bff;
-            --accent-bg: rgba(170, 59, 255, 0.1);
-            --accent-border: rgba(170, 59, 255, 0.5);
-            --social-bg: rgba(244, 243, 236, 0.5);
-            --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+            --text: #94a3b8;
+            --text-h: #f1f5f9;
+            --bg: #020617;
+            --border: #1e293b;
+            --code-bg: #0f172a;
+            --accent: #3b82f6;
+            --accent-bg: rgba(59, 130, 246, 0.15);
+            --accent-border: rgba(59, 130, 246, 0.4);
+            --social-bg: rgba(15, 23, 42, 0.5);
+            --shadow: rgba(0, 0, 0, 0.6) 0 10px 20px -4px, rgba(0, 0, 0, 0.4) 0 6px 10px -3px;
         }
     }
 
     /* Global Typography */
     body {
         @apply font-sans antialiased text-base leading-relaxed bg-background text-foreground;
-        color-scheme: light dark;
+        color-scheme: dark; /* Forces native scrollbars to be dark */
     }
 
     #root {
@@ -94,11 +94,13 @@
     code {
         @apply text-sm px-2 py-1 bg-theme-code;
     }
-  * {
-    @apply border-border outline-ring/50;
+    
+    * {
+        @apply border-border outline-ring/50;
     }
-  html {
-    @apply font-sans;
+    
+    html {
+        @apply font-sans;
     }
 }
 
@@ -108,9 +110,14 @@
         @apply max-w-3xl mx-auto px-4;
     }
 
-    /* Card component */
     .card {
-        @apply bg-theme-bg text-theme-heading border border-theme-border rounded-2xl shadow-theme overflow-hidden;
+        /* Use SHADCN variables for a consistent dark-blue card background */
+        background: var(--card);
+        color: var(--card-foreground);
+        border: 1px solid var(--sidebar-border);
+        border-radius: 1rem; /* rounded-2xl */
+        box-shadow: var(--shadow);
+        overflow: hidden;
     }
 
     .card-padding {
@@ -194,71 +201,53 @@
     --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-:root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
+/* SHADCN UNIFIED DARK BLUE THEME 
+  Applied to both :root and .dark to ensure it's omnipresent
+*/
+:root, .dark {
+    --background: oklch(21.314% 0.08903 263.214); /* Deep Midnight Blue */
+    --foreground: oklch(51.936% 0.07481 260.942); /* Icy white/blue text */
+    
+    --card: oklch(32.882% 0.06218 264.687); /* Slightly lighter navy for cards */
+    --card-foreground: oklch(50.849% 0.06648 261.088);
+    
+    --popover: oklch(0.17 0.035 261);
+    --popover-foreground: oklch(0.96 0.01 261);
+    
+    --primary: oklch(0.60 0.16 261); /* Vibrant Royal/Neon Blue accent */
+    --primary-foreground: oklch(0.98 0.01 261);
+    
+    --secondary: oklch(0.23 0.05 261); /* Muted Blue for secondary buttons */
+    --secondary-foreground: oklch(0.96 0.01 261);
+    
+    --muted: oklch(0.23 0.05 261);
+    --muted-foreground: oklch(0.75 0.04 261);
+    
+    --accent: oklch(0.25 0.06 261); /* Interactive hover state */
+    --accent-foreground: oklch(0.98 0.01 261);
+    
+    --destructive: oklch(0.60 0.15 20); /* Keep red for errors, balanced lightness */
+    --destructive-foreground: oklch(0.98 0 0);
+    
+    --border: oklch(0.25 0.05 261); /* Visible blue-ish borders */
+    --input: oklch(0.25 0.05 261);
+    --ring: oklch(0.60 0.16 261);
+    
+    /* Charts adjusted to a cool blue/purple/teal spectrum */
+    --chart-1: oklch(0.60 0.16 261); /* Primary blue */
+    --chart-2: oklch(0.65 0.14 230); /* Light blue */
+    --chart-3: oklch(0.55 0.15 280); /* Purple */
+    --chart-4: oklch(0.70 0.12 200); /* Cyan */
+    --chart-5: oklch(0.50 0.13 300); /* Deep Purple */
+    
     --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    
+    --sidebar: oklch(0.15 0.03 261);
+    --sidebar-foreground: oklch(0.96 0.01 261);
+    --sidebar-primary: oklch(0.60 0.16 261);
+    --sidebar-primary-foreground: oklch(0.98 0.01 261);
+    --sidebar-accent: oklch(0.23 0.05 261);
+    --sidebar-accent-foreground: oklch(0.96 0.01 261);
+    --sidebar-border: oklch(0.25 0.05 261);
+    --sidebar-ring: oklch(0.60 0.16 261);
 }
