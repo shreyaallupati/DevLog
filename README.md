@@ -38,7 +38,7 @@ Follow these steps to set up the project locally on your machine.
 
 ### 1. Clone the repository
 ```bash
-git clone [https://github.com/yourusername/devlog.git](https://github.com/yourusername/devlog.git)
+git clone [https://github.com/shreyaallupati/devlog.git](https://github.com/shreyaallupati/devlog.git)
 cd devlog
 ```
 
