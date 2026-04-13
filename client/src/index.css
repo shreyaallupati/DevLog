@@ -202,7 +202,7 @@
 }
 
 /* SHADCN UNIFIED DARK BLUE THEME 
-  Applied to both :root and .dark to ensure it's omnipresent
+    Applied to both :root and .dark to ensure it's omnipresent
 */
 :root, .dark {
     --background: oklch(21.314% 0.08903 263.214); /* Deep Midnight Blue */

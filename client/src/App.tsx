@@ -14,37 +14,23 @@ import { CreatePost } from './pages/CreatePost';
 import { Profile } from './pages/Profile'; 
 import { ReadPost } from "./pages/ReadPost"; 
 
-
 function App() {
     return (
         <AuthProvider>
             <Router>
+                
+                {/* BACKGROUND LAYER */}
+                {/* z-0 keeps it safely above the body background, but behind your z-10 app content */}
+                {/* pointer-events-none ensures it doesn't block you from clicking buttons */}
+                <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+                    <Galaxy />
+                </div>
 
-                {/* Main App Content */}
+                {/* MAIN APP CONTENT LAYER */}
+                {/* relative and z-10 ensures all your routes and navbar sit on top of the Galaxy */}
                 <div className="relative z-10 flex flex-col min-h-screen">
                     <Navbar />
-                    <main className="flex-1 bg- text-white">
-                        {/* fixed inset-0 makes it full screen. z-[-1] pushes it behind your app content. */}
-                        {/* pointer-events-none ensures it doesn't block you from clicking buttons! */}
-                        <div className="fixed inset-0 z-50 overflow-hidden pointer-events-none">
-                            {/* <SplashCursor
-                                SIM_RESOLUTION={192}
-                                DYE_RESOLUTION={1280}
-                                DENSITY_DISSIPATION={1}
-                                VELOCITY_DISSIPATION={1.5}
-                                PRESSURE={0.4}
-                                CURL={9}
-                                SPLAT_RADIUS={0.25}
-                                SPLAT_FORCE={10500}
-                                COLOR_UPDATE_SPEED={7}
-                            /> */}
-                            <div className="fixed inset-0 z-40 overflow-hidden pointer-events-none"> 
-                                {/* <LiquidEther/> */}
-                                <Galaxy />
-                                </div>
-                            
-                            {/* <ColorBends/> */}
-                        </div>
+                    <main className="flex-1 text-white">
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/login" element={<Login />} />
