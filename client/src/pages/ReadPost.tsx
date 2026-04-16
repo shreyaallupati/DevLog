@@ -96,13 +96,13 @@ export const ReadPost = () => {
             )}
 
             {/* Post Header */}
-            <header className="mb-10 sm:mb-14">
-                <h1 className="text-4xl sm:text-5xl font-heading font-bold text-blue-600 dark:text-blue-400 leading-[1.15] tracking-tight mb-6">
+            <header className="mb-7 sm:mb-1 bg-black-900 border-black-800 rounded-xl">
+                <h1 className="text-4xl sm:text-5xl font-heading font-bold text-white-600 dark:text-blue-400 leading-[1.15] tracking-tight mb-6">
                     {post.title}
                 </h1>
 
                 {/* Author & Date Meta */}
-                <div className="flex items-center gap-3 pb-6 border-b border-theme-border">
+                <div className="flex items-center gap-3 p-6 border-b border-theme-border  rounded-2xl" style={{ background: 'var(--card)', borderColor: 'var(--border)' }}>
                     <div className="w-10 h-10 rounded-full bg-theme-accent-bg text-theme-accent flex items-center justify-center text-lg font-bold">
                         {post.author.charAt(0).toUpperCase()}
                     </div>
@@ -124,8 +124,11 @@ export const ReadPost = () => {
 
         {/* Post Content */}
             <article className="mt-8 flex flex-col w-full items-stretch z-60 relative">
-                <div className="flex-1 w-full min-h-[200px] p-6 sm:p-8 rounded-2xl border border-theme-border shadow-sm relative z-60 bg-transparent">
-                    <p className="whitespace-pre-wrap break-words font-mono text-base sm:text-lg leading-relaxed text-theme-heading">
+                <div
+                    className="flex-1 w-full min-h-[200px] p-6 sm:p-8 rounded-2xl border shadow-sm relative z-60"
+                    style={{ background: 'var(--card)', borderColor: 'var(--border)' }}
+                >
+                    <p className="whitespace-pre-wrap break-words font-mono text-base sm:text-lg leading-relaxed text-white-600 " >
                         {post.content}
                     </p>
                 </div>

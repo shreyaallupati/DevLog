@@ -1,10 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/NavBar.tsx';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import SplashCursor from './components/SplashCursor';
-import LiquidEther from './components/LiquidEther';
-import ColorBends from './components/ColorBends';
-import Galaxy from './components/Galaxy';
+import Balatro from './components/Balatro'
 import { AuthProvider } from './context/AuthContext.tsx';
 // Import our pages
 import { Home } from './pages/Home';
@@ -23,11 +20,17 @@ function App() {
                 {/* z-0 keeps it safely above the body background, but behind your z-10 app content */}
                 {/* pointer-events-none ensures it doesn't block you from clicking buttons */}
                 <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-                    <Galaxy />
+                    <Balatro
+                        isRotate={false}
+                        mouseInteraction
+                        pixelFilter={2000}
+                        color1="#990059"
+                        color2="#2700b3"
+                        color3="#162325"
+                        />
                 </div>
 
                 {/* MAIN APP CONTENT LAYER */}
-                {/* relative and z-10 ensures all your routes and navbar sit on top of the Galaxy */}
                 <div className="relative z-10 flex flex-col min-h-screen">
                     <Navbar />
                     <main className="flex-1 text-white">

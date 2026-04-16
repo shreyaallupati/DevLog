@@ -209,7 +209,7 @@
     --foreground: oklch(51.936% 0.07481 260.942); /* Icy white/blue text */
     
     --card: oklch(32.882% 0.06218 264.687); /* Slightly lighter navy for cards */
-    --card-foreground: oklch(50.849% 0.06648 261.088);
+    --card-foreground: oklch(78.379% 0.10963 261.283);
     
     --popover: oklch(0.17 0.035 261);
     --popover-foreground: oklch(0.96 0.01 261);
@@ -225,6 +225,7 @@
     
     --accent: oklch(0.25 0.06 261); /* Interactive hover state */
     --accent-foreground: oklch(0.98 0.01 261);
+    --accent-bg: rgba(59, 130, 246, 0.15);
     
     --destructive: oklch(0.60 0.15 20); /* Keep red for errors, balanced lightness */
     --destructive-foreground: oklch(0.98 0 0);
