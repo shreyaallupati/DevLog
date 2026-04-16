@@ -123,6 +123,39 @@ router.get('/:id', async (req: Request, res: Response): Promise<void> => {
     }
 });
 
+// Update a post (Protected Route)
+router.put('/:id', authorize, async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+        const postId = req.params.id;
+        const userPayload = req.user as any; 
+        const authorId = userPayload.user_id;
+        const { title, content } = req.body;
+
+        if (!title || !content) {
+            res.status(400).json({ error: 'Missing required fields: title and content' });
+            return;
+        }
+
+        // SDE Security Standard: Only update if the post ID and the author ID match
+        const updateResult = await pool.query(`
+            UPDATE posts 
+            SET title = $1, content = $2 
+            WHERE id = $3 AND user_id = $4 
+            RETURNING *;
+        `, [title, content, postId, authorId]);
+
+        if (updateResult.rows.length === 0) {
+            res.status(403).json({ error: 'Not authorized to edit this post, or post not found.' });
+            return;
+        }
+
+        res.status(200).json(updateResult.rows[0]);
+    } catch (error) {
+        console.error('Update post error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 // Delete a post (Protected Route)
 router.delete('/:id', authorize, async (req: AuthRequest, res: Response): Promise<void> => {
     try {

@@ -129,7 +129,7 @@ export const ReadPost = () => {
                     className="flex-1 w-full min-h-[200px] p-6 sm:p-8 rounded-2xl border shadow-sm relative z-60"
                     style={{ background: 'var(--card)', borderColor: 'var(--border)' }}
                 >
-                    <div className="prose prose-base sm:prose-lg dark:prose-invert max-w-none prose-p:font-mono prose-headings:font-bold prose-headings:text-theme-heading text-theme-text prose-a:text-theme-accent break-words">
+                    <div className="prose prose-base sm:prose-lg prose-invert max-w-none prose-p:font-mono prose-headings:font-bold prose-headings:text-theme-heading text-theme-text prose-a:text-theme-accent break-words">
                         <ReactMarkdown>{post.content}</ReactMarkdown>
                     </div>
                 </div>

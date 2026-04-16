@@ -11,7 +11,7 @@ export const Navbar = () => {
     };
 
     return (
-        <nav className="sticky top-0 z-60 w-full border-b border-theme-border bg-theme-bg/80 backdrop-blur-md">
+        <nav className="sticky top-0 z-[999] w-full border-b border-theme-border bg-theme-bg/80 backdrop-blur-md">
             <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
                 <div className="flex items-center">
                     <Link to="/" className="text-2xl font-heading font-bold text-theme-heading tracking-tight no-underline hover:opacity-80 transition-opacity">

@@ -20,6 +20,41 @@ export const Profile = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    // --- NEW EDITING STATE ---
+    const [editingPostId, setEditingPostId] = useState<string | null>(null);
+    const [editTitle, setEditTitle] = useState('');
+    const [editContent, setEditContent] = useState('');
+
+    const startEditing = (post: Post) => {
+        setEditingPostId(post.id);
+        setEditTitle(post.title);
+        setEditContent(post.content);
+    };
+
+    const cancelEditing = () => {
+        setEditingPostId(null);
+        setEditTitle('');
+        setEditContent('');
+    };
+
+    const handleSaveEdit = async (postId: string) => {
+        try {
+            const response = await api.put(`/posts/${postId}`, {
+                title: editTitle,
+                content: editContent
+            });
+            
+            // Instantly update the UI without refreshing the page
+            setMyPosts(myPosts.map(p => 
+                p.id === postId ? { ...p, title: response.data.title, content: response.data.content } : p
+            ));
+            setEditingPostId(null);
+        } catch (err: any) {
+            alert(err.response?.data?.error || 'Failed to update post.');
+        }
+    };
+    // -------------------------
+
     useEffect(() => {
         const fetchMyPosts = async () => {
             try {
@@ -108,6 +143,7 @@ export const Profile = () => {
                             key={post.id}
                             className="group flex flex-col sm:flex-row bg-theme-bg border border-theme-border rounded-xl overflow-hidden shadow-sm hover:shadow-theme transition-all duration-300"
                         >
+                            {/* Keep the image exactly the same */}
                             {post.cover_image_path && (
                                 <div className="w-full sm:w-48 lg:w-56 h-48 sm:h-auto flex-shrink-0 bg-theme-social overflow-hidden">
                                     <img
@@ -118,35 +154,87 @@ export const Profile = () => {
                                 </div>
                             )}
 
-                            <div className="p-5 sm:p-6 flex-1 flex flex-col">
-                                <div className="flex justify-between items-start gap-4 mb-3">
-                                    <h3 className="text-xl font-bold text-theme-heading m-0 leading-tight">
-                                        {post.title}
-                                    </h3>
-                                    <span className="text-xs font-medium text-theme-text bg-theme-social px-2.5 py-1 rounded-md whitespace-nowrap border border-theme-border/50">
-                                        {new Date(post.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
-                                    </span>
+                            {editingPostId === post.id ? (
+                                /* --- EDIT MODE FORM --- */
+                                <div className="p-5 sm:p-6 flex-1 flex flex-col gap-4 w-full">
+                                    <input
+                                        type="text"
+                                        value={editTitle}
+                                        onChange={(e) => setEditTitle(e.target.value)}
+                                        className="w-full p-3 bg-theme-code border border-theme-border rounded-lg text-theme-heading font-bold outline-none focus:border-blue-500"
+                                    />
+                                    <textarea
+                                        value={editContent}
+                                        onChange={(e) => setEditContent(e.target.value)}
+                                        className="w-full p-3 bg-theme-code border border-theme-border rounded-lg text-theme-text font-mono outline-none focus:border-blue-500"
+                                        rows={6}
+                                    />
+                                    <div className="flex justify-end gap-3 mt-2">
+                                        <button 
+                                            onClick={cancelEditing} 
+                                            className="px-4 py-2 text-sm text-theme-text hover:text-theme-heading transition-colors"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button 
+                                            onClick={() => handleSaveEdit(post.id)} 
+                                            className="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                                        >
+                                            Save Changes
+                                        </button>
+                                    </div>
                                 </div>
+                            ) : (
+                                /* --- READ MODE (Your existing code + Edit Button) --- */
+                                <div className="p-5 sm:p-6 flex-1 flex flex-col">
+                                    <div className="flex justify-between items-start gap-4 mb-3">
+                                        <h3 className="text-xl font-bold text-theme-heading m-0 leading-tight">
+                                            {post.title}
+                                        </h3>
+                                        <span className="text-xs font-medium text-theme-text bg-theme-social px-2.5 py-1 rounded-md whitespace-nowrap border border-theme-border/50">
+                                            {new Date(post.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                                        </span>
+                                    </div>
 
-                                {/* We wrap the ReactMarkdown inside a line-clamp div to keep the dashboard clean */}
-                                <div className="line-clamp-2 mb-4">
-                                <div className="prose prose-sm dark:prose-invert max-w-none prose-p:font-mono prose-headings:font-bold">
-                                    <ReactMarkdown>{post.content}</ReactMarkdown>
-                                </div>
-                                </div>
+                                    <p className="text-theme-text text-sm font-mono line-clamp-2 mb-4">
+                                        <ReactMarkdown>{post.content}</ReactMarkdown>
+                                    </p>
 
-                                <div className="mt-auto pt-4 border-t border-theme-border flex justify-end">
-                                    <button
-                                        onClick={() => handleDelete(post.id)}
-                                        className="text-red-500 hover:text-red-700 dark:hover:text-red-400 text-sm font-medium flex items-center gap-1.5 transition-colors cursor-pointer px-3 py-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-950/30"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                        </svg>
-                                        Delete Post
-                                    </button>
+                                    <div className="mt-auto pt-4 border-t border-theme-border flex justify-end gap-4">
+                                        {/* NEW Edit Button */}
+                                        <button
+                                            onClick={() => startEditing(post)}
+                                            className="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 text-sm font-medium flex items-center gap-1.5 transition-colors cursor-pointer px-3 py-1.5 rounded-md hover:bg-blue-50 dark:hover:bg-blue-950/30"
+                                        >
+                                            <svg 
+                                                xmlns="http://www.w3.org/2000/svg" 
+                                                viewBox="0 0 24 24" 
+                                                fill="none" 
+                                                stroke="currentColor" 
+                                                strokeWidth="2" 
+                                                strokeLinecap="round" 
+                                                strokeLinejoin="round" 
+                                                className="w-4 h-4"
+                                            >
+                                                <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+                                                <path d="m15 5 4 4"/>
+                                            </svg>
+                                            Edit
+                                        </button>
+                                        
+                                        {/* Existing Delete Button */}
+                                        <button
+                                            onClick={() => handleDelete(post.id)}
+                                            className="text-red-500 hover:text-red-700 dark:hover:text-red-400 text-sm font-medium flex items-center gap-1.5 transition-colors cursor-pointer px-3 py-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-950/30"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                            Delete
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     ))}
                 </div>

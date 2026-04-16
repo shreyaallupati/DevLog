@@ -154,8 +154,8 @@ export const Home = () => {
                                 {/* The 'prose' class gives it beautiful typography formatting. 
                                 'dark:prose-invert' makes sure text stays readable in dark mode!
                                 */}
-                                <div className="prose prose-sm sm:prose-base dark:prose-invert prose-p:font-mono prose-pre:bg-[#1f2028] prose-pre:border prose-pre:border-theme-border max-w-none bg-theme-code p-5 sm:p-6 rounded-xl border border-theme-border/50">
-                                <ReactMarkdown>{post.content}</ReactMarkdown>
+                                <div className="prose prose-sm sm:prose-base prose-invert prose-p:font-mono prose-pre:bg-[#5a5e7a] prose-pre:border prose-pre:border-theme-border max-w-none bg-theme-code p-5 sm:p-6 rounded-xl border border-theme-border/50">
+                                    <ReactMarkdown>{post.content}</ReactMarkdown>
                                 </div>
 
                                 {user?.username === post.author && (
