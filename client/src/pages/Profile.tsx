@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
+import ReactMarkdown from 'react-markdown';
 
 interface Post {
     id: string;
@@ -127,9 +128,12 @@ export const Profile = () => {
                                     </span>
                                 </div>
 
-                                <p className="text-theme-text text-sm font-mono line-clamp-2 mb-4">
-                                    {post.content}
-                                </p>
+                                {/* We wrap the ReactMarkdown inside a line-clamp div to keep the dashboard clean */}
+                                <div className="line-clamp-2 mb-4">
+                                <div className="prose prose-sm dark:prose-invert max-w-none prose-p:font-mono prose-headings:font-bold">
+                                    <ReactMarkdown>{post.content}</ReactMarkdown>
+                                </div>
+                                </div>
 
                                 <div className="mt-auto pt-4 border-t border-theme-border flex justify-end">
                                     <button

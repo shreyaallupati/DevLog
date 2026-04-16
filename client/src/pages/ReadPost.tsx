@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import ReactMarkdown from 'react-markdown';
 
 interface Post {
     id: string;
@@ -128,9 +129,9 @@ export const ReadPost = () => {
                     className="flex-1 w-full min-h-[200px] p-6 sm:p-8 rounded-2xl border shadow-sm relative z-60"
                     style={{ background: 'var(--card)', borderColor: 'var(--border)' }}
                 >
-                    <p className="whitespace-pre-wrap break-words font-mono text-base sm:text-lg leading-relaxed text-white-600 " >
-                        {post.content}
-                    </p>
+                    <div className="prose prose-base sm:prose-lg dark:prose-invert max-w-none prose-p:font-mono prose-headings:font-bold prose-headings:text-theme-heading text-theme-text prose-a:text-theme-accent break-words">
+                        <ReactMarkdown>{post.content}</ReactMarkdown>
+                    </div>
                 </div>
             </article>
         </div>
