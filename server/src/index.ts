@@ -45,3 +45,14 @@ app.get('/api/health', async (req: Request, res: Response) => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+// At the bottom of server/src/index.ts
+
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
+}
+
+// Export the Express API so Vercel can consume it as a serverless function
+export default app;
